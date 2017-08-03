@@ -9,7 +9,7 @@ RUN apk add --no-cache curl g++ make curl-dev wget && \
     cd dirb222/ && \
     chmod +x -R . && \
     ./configure && \
-    make && \
+    make -j && \
     cp dirb /bin && \
     cp -r wordlists /usr/share/dirb/ && \
     # Cleanup unneeded packages

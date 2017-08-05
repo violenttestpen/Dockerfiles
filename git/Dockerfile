@@ -5,8 +5,10 @@ FROM alpine:latest
 #     -v $HOME/.git:/root/.git
 #     -v $HOME/.gitconfig:/root/.gitconfig
 #     -v /path/to/git/repo:/git \
-#     -e GIT_PAGER=     # Fix ANSI color codes not escaped properly
 #     --name git
+
+# Fix ANSI color codes not escaped properly
+ENV GIT_PAGER=
 
 WORKDIR /git
 RUN apk add --no-cache git openssh

@@ -1,0 +1,23 @@
+FROM alpine:latest AS staging
+
+WORKDIR /root
+RUN apk add --no-cache \
+        python \
+        g++ \
+        py-pip \
+        yaml-dev \
+        python-dev \
+        wget \
+    && pip install prettytable Mako PyYAML python-dateutil PySocks \
+    && wget --no-check-certificate https://github.com/epinna/weevely3/archive/master.tar.gz \
+    && apk del --purge g++ py-pip yaml-dev python-dev wget \
+    && tar xzf master.tar.gz \
+    && rm master.tar.gz
+
+FROM alpine:latest
+COPY --from=staging /usr/lib/python2.7/site-packages /usr/lib/python2.7/site-packages
+COPY --from=staging /root/weevely3-master /root/weevely3
+RUN apk add --no-cache python \
+    && ln -s /root/weevely3/weevely.py /usr/local/bin/weevely
+
+ENTRYPOINT ["weevely"]

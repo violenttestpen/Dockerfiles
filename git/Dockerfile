@@ -1,9 +1,9 @@
 FROM alpine:latest
 
 # docker run -it --rm \
-#     -v $HOME/.ssh:/root/.ssh
-#     -v $HOME/.git:/root/.git
-#     -v $HOME/.gitconfig:/root/.gitconfig
+#     -v $HOME/.ssh:/root/.ssh \
+#     -v $HOME/.git:/root/.git \
+#     -v $HOME/.gitconfig:/root/.gitconfig \
 #     -v /path/to/git/repo:/git \
 #     --name git
 

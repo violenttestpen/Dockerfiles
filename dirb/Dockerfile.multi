@@ -11,12 +11,11 @@ RUN apk add --no-cache g++ make curl-dev wget \
     && ./configure \
     && make -j \
     # Cleanup unneeded packages
-    && apk del --purge g++ make curl-dev wget \
-    && rm -rf dirb222.tar.gz dirb222/
+    && apk del --purge g++ make curl-dev wget
 
 FROM alpine:latest
 RUN apk add --no-cache curl
 COPY --from=staging /root/dirb222/dirb /bin
-COPY --from=staging /root/dirb222/wordlists /usr/share/dirb/
+COPY --from=staging /root/dirb222/wordlists /usr/share/dirb/wordlists
 
 ENTRYPOINT ["dirb"]

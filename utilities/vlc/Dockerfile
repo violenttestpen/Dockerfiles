@@ -16,7 +16,10 @@ RUN apk add --no-cache \
         alsa-utils \
     && dbus-uuidgen --ensure=/etc/machine-id \
     && ln -sf /etc/machine-id /var/lib/dbus/machine-id
+RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+RUN apk add --no-cache pulseaudio
+RUN sed -i 's/geteuid/getppid/' /usr/bin/vlc
 
-RUN adduser winston -D
-USER winston
+RUN adduser pulse -D
+USER user
 ENTRYPOINT ["vlc"]

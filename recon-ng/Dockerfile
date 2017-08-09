@@ -13,8 +13,7 @@ RUN apk add --no-cache \
         libxml2-dev \
         libxslt-dev \
         wget \
-    && wget --no-check-certificate https://bitbucket.org/LaNMaSteR53/recon-ng/get/master.tar.gz \
-    && tar xzf master.tar.gz \
+    && wget --no-check-certificate https://bitbucket.org/LaNMaSteR53/recon-ng/get/master.tar.gz -O - | tar xz \
     && mv */ recon-ng/ \
     && pip install -r recon-ng/REQUIREMENTS \
     && apk del --purge \
@@ -23,7 +22,6 @@ RUN apk add --no-cache \
         python-dev \
         libxml2-dev \
         libxslt-dev \
-        wget \
-    && rm -f master.tar.gz
+        wget
 
 ENTRYPOINT ["python", "/root/recon-ng/recon-ng"]

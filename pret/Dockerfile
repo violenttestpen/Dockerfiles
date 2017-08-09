@@ -9,14 +9,12 @@ RUN apk add --no-cache \
         wget \
     && pip install --no-cache-dir colorama pysnmp \
     # Download the repository
-    && wget --no-check-certificate https://github.com/RUB-NDS/PRET/archive/master.tar.gz \
-    && tar -xzf master.tar.gz \
+    && wget --no-check-certificate https://github.com/RUB-NDS/PRET/archive/master.tar.gz -O - | tar xz \
     # Cleanup
     && apk del --purge \
         py-pip \
         python-dev \
         g++ \
-        wget \
-    && rm -f master.tar.gz
+        wget
 
 ENTRYPOINT ["python", "/root/PRET-master/pret.py"]

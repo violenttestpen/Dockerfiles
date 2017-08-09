@@ -1,0 +1,25 @@
+FROM ubuntu:16.04 AS staging
+
+WORKDIR /root/Empire
+RUN apt-get update \
+    # Install git for cloning repository
+    && apt-get install --no-install-recommends -y git \
+    && env GIT_SSL_NO_VERIFY=true git clone https://github.com/EmpireProject/Empire.git . \
+    # Setup, echo for accepting setup_database.py prompt
+    && echo | bash setup/install.sh \
+    # Cleanup
+    && apt-get purge -y make g++ python-dev python-pip libxml2-dev libffi-dev libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM ubuntu:16.04
+COPY --from=staging /root/Empire /root/Empire
+COPY --from=staging /usr/lib/python2.7 /usr/lib/python2.7
+COPY --from=staging /usr/local/lib/python2.7 /usr/local/lib/python2.7
+
+WORKDIR /root/Empire
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y python default-jdk \
+    && cp setup/bomutils/build/bin/mkbom /usr/local/bin/mkbom \
+    && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["./empire"]

@@ -4,6 +4,8 @@ clone:
     recursive: true
     submodule_override:
       submodule: 'https://bitbucket.org/user/repo.git'
+    when:
+      branch: [ master, develop ]
 
 pipeline:
   # Executed only in master branch
@@ -77,9 +79,9 @@ pipeline:
     auth_token: abcdef
     template: |
       {{#success build.status}}
-        Build and unit-tests for {{ build.branch }} is successful.
+        Build and unit-tests for {{ repo.name }}:{{ build.branch }} initiated by {{ build.author }} is successful.
       {{ else }}
-        {{ build.author }} broke the build. Hang your head in shame.
+        {{ build.author }} broke the build for {{ repo.name }}:{{ build.branch }}. Hang your head in shame.
       {{/success}}
     when:
       branch: [ master, develop ]
@@ -89,8 +91,9 @@ pipeline:
   cleanup:
     image: scottlackey/drone-auth-ecr
     commands:
+      # - "[ ! $(docker ps -f ancestor=staging -f status=running -aq) ] && docker rmi staging:latest || echo 'staging in use'"
       - docker rmi staging:latest
-      - docker rmi `docker images --filter "dangling=true" -aq` || echo "No dangling images"
+      - docker rmi $(docker images --filter "dangling=true" -aq) || echo "No dangling images"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:

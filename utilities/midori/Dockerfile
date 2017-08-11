@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM debian:stretch-slim
 
 # docker run --rm -it \
 #   --net host \
@@ -14,9 +14,8 @@ FROM alpine:latest
 #   --ipc="host" \
 #   --name midori \
 
-RUN apk add --no-cache \
-    midori
-#    ttf-dejavu \
-#    gnome-icon-theme
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends midori ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["midori"]

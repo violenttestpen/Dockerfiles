@@ -15,7 +15,7 @@ RUN apk add --no-cache \
         wget \
     && wget --no-check-certificate https://bitbucket.org/LaNMaSteR53/recon-ng/get/master.tar.gz -O - | tar xz \
     && mv */ recon-ng/ \
-    && pip install -r recon-ng/REQUIREMENTS \
+    && pip install --no-cache-dir -r recon-ng/REQUIREMENTS \
     && apk del --purge \
         py-pip \
         build-base \

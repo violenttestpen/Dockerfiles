@@ -6,9 +6,9 @@ FROM alpine:latest
 WORKDIR /root
 RUN apk add --no-cache python swig libxslt wget python-dev py-pip g++ libressl-dev libxml2-dev libxslt-dev \
     && wget --no-check-certificate https://github.com/smicallef/spiderfoot/archive/master.tar.gz -O - | tar xz \
-    && pip install -r spiderfoot-master/requirements.txt \
+    && pip install --no-cache-dir -r spiderfoot-master/requirements.txt \
     # Fix M2Crypto module import error
-    && pip install M2Crypto -U \
+    && pip install --no-cache-dir M2Crypto -U \
     # Cleanup
     && apk del --purge wget python-dev py-pip g++ libressl-dev libxml2-dev libxslt-dev
 

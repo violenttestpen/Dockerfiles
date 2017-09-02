@@ -1,0 +1,18 @@
+version: '2'
+services:
+  ide:
+#    image: psharkey/intellij:latest
+    image: psharkey/netbeans-8.1:latest
+    environment:
+      - DISPLAY=novnc:0.0
+    depends_on:
+      - novnc
+
+  novnc:
+    build: .
+    environment:
+      # Adjust to your screen size
+      - DISPLAY_WIDTH=1366
+      - DISPLAY_HEIGHT=768
+    ports:
+      - "8080:8080"

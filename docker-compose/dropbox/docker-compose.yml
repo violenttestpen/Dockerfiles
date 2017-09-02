@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    dropbox:
+        build: ../../utilities/dropbox
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - $HOME/Dropbox:/root/Dropbox
+            - $HOME/.dropbox/instance_db:/root/.dropbox/instance_db
+            - $HOME/.dropbox/instance1:/root/.dropbox/instance1
+        network_mode: host

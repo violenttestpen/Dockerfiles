@@ -19,7 +19,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
         x11vnc \
         xvfb \
         # socat to allow inter-container VNC
-        # socat \
+        socat \
     # Clone noVNC from github
     && git clone https://github.com/kanaka/noVNC.git /root/noVNC \
     # Clone websockify first so that we can uninstall git safely

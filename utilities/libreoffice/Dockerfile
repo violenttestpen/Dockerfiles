@@ -4,6 +4,6 @@ RUN apk add --no-cache \
     libreoffice \
     ttf-dejavu
 
-RUN adduser winston -D
-USER winston
+RUN adduser libreoffice -D
+USER libreoffice
 ENTRYPOINT ["libreoffice"]

@@ -6,6 +6,7 @@ services:
         volumes:
             - $HOME/.arduino15:/root/.arduino15
             - $HOME/Documents/Arduino:/root/Arduino
+            - /dev/bus/usb:/dev/bus/usb
         environment:
             - DISPLAY=192.168.99.1:0
         network_mode: host

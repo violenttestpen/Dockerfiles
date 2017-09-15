@@ -1,10 +1,12 @@
+FROM alpine:latest AS staging
+
+# Download the repository
+RUN apk add --no-cache git
+RUN git clone https://github.com/laramies/theHarvester.git /root/theHarvester
+
 FROM alpine:latest
 
-WORKDIR /root
-RUN apk add --no-cache python py-requests wget \
-    # Download the repository
-    && wget --no-check-certificate https://github.com/laramies/theHarvester/archive/master.tar.gz -O - | tar xz \
-    # Cleanup
-    && apk del --purge wget
+COPY --from=staging /root/theHarvester /root/theHarvester
+RUN apk add --no-cache python2 py2-requests
 
-ENTRYPOINT ["python", "/root/theHarvester-master/theHarvester.py"]
+ENTRYPOINT ["/usr/bin/python", "/root/theHarvester/theHarvester.py"]

@@ -9,6 +9,8 @@ FROM alpine:latest
 
 # docker run -p8888:8888 jupyter --NotebookApp.token=''
 
+ENV SHELL /bin/bash
+
 COPY --from=staging /root/.cache /root/.cache
 RUN apk add --no-cache python3 py3-pip py3-zmq bash
 RUN pip3 install jupyter
@@ -16,9 +18,6 @@ RUN pip3 install jupyter
 RUN adduser -D jupyter -s /bin/bash
 
 USER jupyter
-#RUN jupyter notebook --generate-config \
-#    && echo "c.NotebookApp.token=''" >> ~/.jupyter/jupyter_notebook_config.py
-
 WORKDIR /home/jupyter
 
 ENTRYPOINT ["jupyter", "notebook", "--no-browser", "--ip=0.0.0.0"]

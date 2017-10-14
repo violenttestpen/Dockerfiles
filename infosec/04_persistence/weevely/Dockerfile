@@ -1,18 +1,19 @@
+FROM alpine:latest AS staging
+
+RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
+RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+RUN apk update
+RUN apk add git python2 py2-pip py-prettytable py2-mako py2-yaml py2-dateutil
+RUN pip install PySocks
+RUN git clone https://github.com/epinna/weevely3 /weevely3 \
+    && rm -rf /weevely3/.git
+
 FROM alpine:latest
 
-WORKDIR /root
-RUN apk add --no-cache \
-        python \
-        g++ \
-        py-pip \
-        yaml-dev \
-        python-dev \
-        wget \
-    && pip install --no-cache-dir prettytable Mako PyYAML python-dateutil PySocks \
-    && wget --no-check-certificate https://github.com/epinna/weevely3/archive/master.tar.gz -O - | tar xz \
-    && apk del --purge g++ py-pip yaml-dev python-dev wget
+COPY --from=staging /usr/lib/python2.7/site-packages /usr/lib/python2.7/site-packages
+COPY --from=staging /weevely3 /weevely3
 
-RUN mv */ weevely3 \
-    && ln -s /root/weevely3/weevely.py /usr/local/bin/weevely
+RUN apk add --no-cache python2
+RUN ln -s /weevely3/weevely.py /usr/local/bin/weevely
 
 ENTRYPOINT ["weevely"]

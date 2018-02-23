@@ -2,8 +2,7 @@ FROM alpine:latest AS staging
 
 RUN apk update
 RUN apk add python3 py3-pip python3-dev build-base
-RUN pip3 install wheel
-RUN pip3 install jupyter
+RUN pip3 install wheel jupyter
 
 FROM alpine:latest
 
@@ -12,8 +11,8 @@ FROM alpine:latest
 ENV SHELL /bin/bash
 
 COPY --from=staging /root/.cache /root/.cache
-RUN apk add --no-cache python3 py3-pip py3-zmq bash
-RUN pip3 install jupyter
+RUN apk add --no-cache python3 py3-pip py3-zmq bash \
+    && pip3 install jupyter
 
 RUN adduser -D jupyter -s /bin/bash
 

@@ -10,10 +10,10 @@ RUN git clone https://github.com/epinna/weevely3 /weevely3 \
 
 FROM alpine:latest
 
+RUN apk add --no-cache python2
+
 COPY --from=staging /usr/lib/python2.7/site-packages /usr/lib/python2.7/site-packages
 COPY --from=staging /weevely3 /weevely3
-
-RUN apk add --no-cache python2
 RUN ln -s /weevely3/weevely.py /usr/local/bin/weevely
 
 ENTRYPOINT ["weevely"]

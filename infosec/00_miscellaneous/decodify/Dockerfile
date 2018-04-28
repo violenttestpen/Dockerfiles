@@ -1,6 +1,7 @@
 FROM alpine:latest
 
 ADD https://raw.githubusercontent.com/UltimateHackers/Decodify/master/dcode /usr/local/bin/dcode
-RUN apk add --no-cache python2 \
+RUN wget https://github.com/pts/staticpython/raw/master/release/python2.7-static -O /usr/local/bin/python2 \
+    && chmod +x /usr/local/bin/python2 \
     && chmod +x /usr/local/bin/dcode
 ENTRYPOINT ["dcode"]

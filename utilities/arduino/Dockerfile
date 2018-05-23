@@ -1,7 +1,7 @@
-FROM ubuntu:17.04
+FROM ubuntu:latest
 
-ARG ARDUINO_VERSION=1.8.4
-ENV DISPLAY=:0
+# ARDUINO_VERSION = '1.x.x'
+ARG ARDUINO_VERSION
 
 WORKDIR /root
 RUN apt-get update \

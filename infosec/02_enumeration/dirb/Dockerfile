@@ -10,7 +10,7 @@ RUN apk add --no-cache curl g++ make curl-dev wget \
     && ./configure \
     && make -j \
     && cp dirb /bin \
-    && cp -r wordlists /usr/share/dirb/ \
+    && cp -r wordlists/ /usr/share/dirb/wordlists \
     # Cleanup unneeded packages
     && apk del --purge g++ make curl-dev wget \
     && rm -rf ../dirb222/

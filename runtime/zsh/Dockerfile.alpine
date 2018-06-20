@@ -1,0 +1,9 @@
+FROM alpine:latest
+
+ENV ZSH_THEME agnoster
+
+RUN apk add --no-cache zsh git \
+    && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" || echo true \
+    && sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="$ZSH_THEME"/g' /root/.zshrc
+
+ENTRYPOINT ["/bin/zsh"]

@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+ENV ZSH_THEME agnoster
+
+RUN apt-get update \
+    && apt-get install -y curl git locales zsh fonts-powerline \
+    && locale-gen en_US.UTF-8 \
+    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || echo true \
+    && sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="$ZSH_THEME"/g' /root/.zshrc \
+    && chsh -s /usr/bin/zsh \
+    && rm -rf /var/cache/apt/*
+
+ENTRYPOINT ["/usr/bin/zsh"]

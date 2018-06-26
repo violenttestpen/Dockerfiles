@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# exit 0
+
+ulimit -c unlimited
+echo "/tmp/core.%s.%e.%p" > /proc/sys/kernel/core_pattern
+
+/opt/protostar/bin/net0
+/opt/protostar/bin/net1
+/opt/protostar/bin/net2
+/opt/protostar/bin/net3
+/opt/protostar/bin/final0
+/opt/protostar/bin/final1
+/opt/protostar/bin/final2
+
+echo protostar > /etc/hostname
+#/etc/init.d/hostname.sh
+#dpkg-reconfigure openssh-server
+
+su - user
+exec "$@"

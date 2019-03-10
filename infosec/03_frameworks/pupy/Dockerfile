@@ -1,13 +1,13 @@
 FROM alpine:latest AS staging
 
-RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
-RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories
 RUN apk add --no-cache \
+    -X http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    -X http://dl-cdn.alpinelinux.org/alpine/edge/community \
         git \
         python2 \
         py2-pip \
         py2-pefile \
-        p2-yaml \
+        py2-yaml \
         py2-netaddr \
         py2-ecdsa \
         py2-paramiko \

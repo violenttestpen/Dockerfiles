@@ -1,15 +1,11 @@
 FROM debian:latest
 
-# RUN echo deb http://deb.debian.org/debian/ squeeze main contrib non-free > /etc/apt/sources.list
-# RUN echo deb-src http://deb.debian.org/debian/ squeeze main contrib non-free >> /etc/apt/sources.list
-
 RUN dpkg --add-architecture i386
 RUN apt-get update \
     # Install compilation tools and gdb
-    && apt-get install -y dpkg-dev gcc-6-multilib gdb \
+    && apt-get install -y dpkg-dev gcc-multilib gdb \
     # Install python 2 and 3
-    && apt-get install -y python2.7 python3 \
-    && ln -s /usr/bin/python2.7 /usr/bin/python \
+    && apt-get install -y python2.7 python3 python-pip python3-pip \
     # Install git
     && apt-get install -y git \
     # Add missing ps
@@ -18,6 +14,10 @@ RUN apt-get update \
     && apt-get install -y net-tools \
     # Cleanup
     && rm -rf /var/cache/apt/*
+
+# Install pwntools
+RUN pip install --no-cache-dir pwntools \
+    && pip3 install --no-cache-dir pwntools
 
 RUN mkdir -p /opt/protostar/run
 RUN useradd user -m \

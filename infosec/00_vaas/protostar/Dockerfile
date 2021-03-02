@@ -24,9 +24,12 @@ RUN useradd user -m \
     && echo "user:user" | chpasswd \
     && chsh -s /bin/bash user
 
-# Install gdb-peda
-RUN git clone https://github.com/longld/peda.git /home/user/peda \
-    && echo "source /home/user/peda/peda.py" >> /home/user/.gdbinit
+# Install gef
+ADD --chown=user:user http://gef.blah.cat/py /home/user/.gdbinit-gef.py
+RUN pip3 install --no-cache-dir keystone-engine ropper
+RUN echo source /home/user/.gdbinit-gef.py >> /home/user/.gdbinit \
+    && chmod +x /home/user/.gdbinit-gef.py
+RUN echo "export LC_CTYPE=C.UTF-8" >> /home/user/.bashrc
 
 COPY protostar/ /opt/protostar/bin
 COPY rc.local /etc/rc.local
